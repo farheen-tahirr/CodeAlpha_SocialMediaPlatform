@@ -53,6 +53,33 @@ const getAllPosts = async (req, res) => {
     }
 };
 // ======================
+// Get Posts By User
+// ======================
+
+const getPostsByUser = async (req, res) => {
+
+    try {
+
+        const posts = await Post.find({
+            user: req.params.userId
+        })
+        .populate("user", "name role university")
+        .sort({ createdAt: -1 });
+
+        res.status(200).json(posts);
+
+    } catch (error) {
+
+        console.log(error);
+
+        res.status(500).json({
+            message: "Server Error"
+        });
+
+    }
+
+};
+// ======================
 // Like / Unlike Post
 // ======================
 const likePost = async (req, res) => {
@@ -105,5 +132,6 @@ const likePost = async (req, res) => {
 module.exports = {
     createPost,
     getAllPosts,
+    getPostsByUser,
     likePost,
 };

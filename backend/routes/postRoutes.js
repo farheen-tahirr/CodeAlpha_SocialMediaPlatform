@@ -3,6 +3,7 @@ const protect = require("../middleware/authMiddleware");
 const {
     createPost,
     getAllPosts,
+    getPostsByUser,
     likePost,
 } = require("../controllers/postController");
 
@@ -13,6 +14,8 @@ router.post("/", protect, createPost);
 
 // Get All Posts
 router.get("/", getAllPosts);
+// Get Posts By User
+router.get("/user/:userId", getPostsByUser);
 // Like / Unlike Post
 router.put("/:id/like", protect, likePost);
 
