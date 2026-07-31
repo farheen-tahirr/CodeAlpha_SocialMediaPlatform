@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>CampusSphere | Profile</title>
+
+<link rel="stylesheet" href="css/style.css">
+
+</head>
+
+<body>
+
+<nav class="navbar">
+
+    <div class="logo">
+        🎓 CampusSphere
+    </div>
+
+    <div class="nav-links">
+
+        <a href="index.html">
+            Home
+        </a>
+
+        <a href="profile.html">
+            Profile
+        </a>
+
+        <button id="logoutBtn">
+            Logout
+        </button>
+
+    </div>
+
+</nav>
+
+
+<main class="profile-container">
+
+    <!-- PROFILE HEADER -->
+
+    <section class="profile-header">
+
+        <div class="profile-cover"></div>
+
+        <div class="profile-info">
+
+            <div id="profileAvatar" class="profile-avatar">
+                F
+            </div>
+
+            <h1 id="profileName">
+                Loading...
+            </h1>
+
+            <p id="profileRole">
+                Student
+            </p>
+
+            <p id="profileUniversity">
+                University of Sahiwal
+            </p>
+
+            <p id="profileBio">
+                No bio yet.
+            </p>
+
+            <div class="profile-buttons">
+
+                <button id="editProfileBtn" class="edit-btn">
+                    Edit Profile
+                </button>
+
+                <button id="followBtn" class="follow-btn">
+                    Follow
+                </button>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- STATS -->
+
+    <section class="stats-container">
+
+        <button class="stat-card" id="postsStat">
+
+            <h2 id="postCount">
+                0
+            </h2>
+
+            <span>Posts</span>
+
+        </button>
+
+
+        <button class="stat-card" id="followersStat">
+
+            <h2 id="followersCount">
+                0
+            </h2>
+
+            <span>Followers</span>
+
+        </button>
+
+
+        <button class="stat-card" id="followingStat">
+
+            <h2 id="followingCount">
+                0
+            </h2>
+
+            <span>Following</span>
+
+        </button>
+
+    </section>
+
+
+    <!-- POSTS -->
+
+    <section class="posts-section">
+
+        <div class="section-title">
+
+            <h2>
+                Recent Posts
+            </h2>
+
+        </div>
+
+        <div id="userPosts"></div>
+
+    </section>
+
+</main>
+
+
+<!-- EDIT PROFILE MODAL -->
+
+<div id="editModal" class="modal">
+
+    <div class="modal-content">
+
+        <h2>Edit Profile</h2>
+
+        <label for="bioInput">
+            Bio
+        </label>
+
+        <textarea id="bioInput"></textarea>
+
+
+        <label for="universityInput">
+            University
+        </label>
+
+        <input
+            id="universityInput"
+            type="text"
+        >
+
+
+        <label for="roleInput">
+            Role
+        </label>
+
+        <select id="roleInput">
+
+            <option value="Student">
+                Student
+            </option>
+
+            <option value="Fresher">
+                Fresher
+            </option>
+
+            <option value="Alumni">
+                Alumni
+            </option>
+
+        </select>
+
+
+        <div class="modal-buttons">
+
+            <button id="cancelEdit">
+                Cancel
+            </button>
+
+            <button id="saveProfile">
+                Save Changes
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- FOLLOWERS / FOLLOWING MODAL -->
+
+<div id="peopleModal" class="modal">
+
+    <div class="modal-content">
+
+        <h2 id="peopleModalTitle">
+            People
+        </h2>
+
+        <div id="peopleList"></div>
+
+        <div class="modal-buttons">
+
+            <button id="closePeopleModal">
+                Close
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script src="js/profile.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>CampusSphere | Home</title>
+
+    <link rel="stylesheet" href="css/style.css">
+
+</head>
+
+
+<body>
+
+
+    <!-- ======================
+         NAVBAR
+    ======================= -->
+
+
+    <nav class="navbar">
+
+
+        <div class="logo">
+            🎓 CampusSphere
+        </div>
+
+
+
+        <div class="nav-links">
+
+
+            <a href="index.html">
+                Home
+            </a>
+
+
+            <a href="profile.html">
+                Profile
+            </a>
+
+
+            <button id="logoutBtn">
+                Logout
+            </button>
+
+
+        </div>
+
+
+    </nav>
+
+
+
+
+
+    <!-- ======================
+         DASHBOARD
+    ======================= -->
+
+
+    <div class="dashboard">
+
+
+
+
+
+        <!-- ======================
+             LEFT SIDEBAR
+        ======================= -->
+
+
+        <aside class="sidebar">
+
+
+            <h3>
+                Menu
+            </h3>
+
+
+
+            <a href="index.html">
+                🏠 Home
+            </a>
+
+
+
+            <a href="#">
+                🤝 Network
+            </a>
+
+
+
+            <a href="profile.html">
+                👤 Profile
+            </a>
+
+
+
+            <a href="#">
+                💬 Messages
+            </a>
+
+
+
+            <a href="#">
+                ⚙ Settings
+            </a>
+
+
+
+        </aside>
+
+
+
+
+
+
+
+        <!-- ======================
+             MAIN FEED
+        ======================= -->
+
+
+        <main class="feed">
+
+
+
+
+
+            <!-- Welcome Card -->
+
+
+            <section class="welcome-card">
+
+
+                <h1 id="welcomeMessage">
+                    Welcome to CampusSphere 👋
+                </h1>
+
+
+
+                <p>
+                    Connect • Learn • Grow Together
+                </p>
+
+
+
+            </section>
+
+
+
+
+
+
+
+
+            <!-- Create Post -->
+
+
+            <section class="create-post">
+
+
+
+                <h3>
+                    What's on your mind?
+                </h3>
+
+
+
+                <textarea
+
+                    id="postContent"
+
+                    placeholder="Share something with your campus community..."
+
+                    maxlength="1000">
+
+                </textarea>
+
+
+
+
+                <button id="createPostBtn">
+
+                    Post
+
+                </button>
+
+
+
+            </section>
+
+
+
+
+
+
+
+            <!-- Campus Feed -->
+
+
+            <section>
+
+
+                <h2 class="feed-title">
+
+                    Campus Feed
+
+                </h2>
+
+
+
+
+
+                <div id="postsContainer">
+
+
+                    <p class="loading">
+
+                        Loading posts...
+
+                    </p>
+
+
+
+                </div>
+
+
+
+            </section>
+
+
+
+
+
+        </main>
+
+
+
+
+
+
+
+
+
+        <!-- ======================
+             RIGHT PANEL
+        ======================= -->
+
+
+       <aside class="right-panel">
+
+
+    <!-- Trending -->
+
+    <div class="panel-card">
+
+
+        <h3>
+            🔥 Trending
+        </h3>
+
+
+        <div class="side-item">
+
+            <strong>
+                #CampusLife
+            </strong>
+
+            <span>
+                2.4K posts
+            </span>
+
+        </div>
+
+
+
+        <div class="side-item">
+
+            <strong>
+                #SoftwareEngineering
+            </strong>
+
+            <span>
+                1.8K posts
+            </span>
+
+        </div>
+
+
+
+        <div class="side-item">
+
+            <strong>
+                #Internships
+            </strong>
+
+            <span>
+                950 posts
+            </span>
+
+        </div>
+
+
+    </div>
+
+
+
+
+
+
+    <!-- Alumni -->
+
+
+    <div class="panel-card">
+
+
+        <h3>
+            🎓 Alumni
+        </h3>
+
+
+
+        <div class="profile-mini">
+
+
+            <div class="mini-avatar">
+                A
+            </div>
+
+
+            <div>
+
+                <strong>
+                    Ali Ahmed
+                </strong>
+
+                <p>
+                    Software Engineer
+                </p>
+
+            </div>
+
+
+        </div>
+
+
+
+
+
+        <div class="profile-mini">
+
+
+            <div class="mini-avatar">
+                S
+            </div>
+
+
+            <div>
+
+                <strong>
+                    Sara Khan
+                </strong>
+
+                <p>
+                    Product Designer
+                </p>
+
+            </div>
+
+
+        </div>
+
+
+
+    </div>
+
+
+
+
+
+
+
+    <!-- Events -->
+
+
+    <div class="panel-card">
+
+
+        <h3>
+            📅 Events
+        </h3>
+
+
+
+
+        <div class="event-box">
+
+
+            <strong>
+                Hackathon 2026
+            </strong>
+
+
+            <p>
+                📍 Online
+            </p>
+
+
+            <small>
+                Aug 15
+            </small>
+
+
+        </div>
+
+
+
+
+
+        <div class="event-box">
+
+
+            <strong>
+                Career Workshop
+            </strong>
+
+
+            <p>
+                📍 University Hall
+            </p>
+
+
+            <small>
+                Sep 5
+            </small>
+
+
+        </div>
+
+
+
+    </div>
+
+
+
+
+</aside>
+
+    </div>
+
+
+
+
+
+
+
+    <!-- ======================
+         JAVASCRIPT
+    ======================= -->
+
+
+    <script src="js/auth.js"></script>
+
+    <script src="js/feed.js"></script>
+
+
+
+</body>
+
+</html>
