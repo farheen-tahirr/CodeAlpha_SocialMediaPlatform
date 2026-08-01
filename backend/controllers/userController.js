@@ -5,25 +5,53 @@ const User = require("../models/User");
 // ======================
 
 const getUserById = async (req, res) => {
+
     try {
+
         const user = await User.findById(req.params.id)
-            .select("-password");
+            .select("-password")
+            .populate("followers", "name role")
+            .populate("following", "name role");
 
         if (!user) {
             return res.status(404).json({
-                message: "User not found",
+                message: "User not found"
             });
         }
 
-        res.status(200).json(user);
+        let isFollowing = false;
+
+        if (req.headers.authorization) {
+
+            const token = req.headers.authorization.split(" ")[1];
+
+            const decoded = require("jsonwebtoken").verify(
+                token,
+                process.env.JWT_SECRET
+            );
+
+            const currentUser = await User.findById(decoded.id);
+
+            isFollowing = currentUser.following.some(
+                id => id.toString() === user._id.toString()
+            );
+        }
+
+        res.json({
+            ...user.toObject(),
+            isFollowing
+        });
 
     } catch (error) {
+
         console.log(error);
 
         res.status(500).json({
-            message: "Server Error",
+            message: "Server Error"
         });
+
     }
+
 };
 
 
