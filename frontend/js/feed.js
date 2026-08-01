@@ -1,168 +1,96 @@
-// ======================
-// CHECK LOGIN
-// ======================
+// ==========================================
+// CampusSphere Feed
+// ==========================================
+
+const API_URL = "http://localhost:3000";
 
 const token = localStorage.getItem("token");
-const storedUser = localStorage.getItem("user");
+const storedUser = JSON.parse(localStorage.getItem("user"));
 
-if (!token) {
+if (!token || !storedUser) {
     window.location.href = "login.html";
 }
 
-// ======================
-// DISPLAY USER
-// ======================
+// ==========================================
+// Welcome
+// ==========================================
 
-if (storedUser) {
+const welcomeMessage = document.getElementById("welcomeMessage");
 
-    const user = JSON.parse(storedUser);
-
-    const welcomeMessage = document.getElementById("welcomeMessage");
-
-    if (welcomeMessage) {
-        welcomeMessage.textContent = `Welcome back, ${user.name} 👋`;
-    }
+if (welcomeMessage) {
+    welcomeMessage.textContent = `Welcome back, ${storedUser.name} 👋`;
 }
 
-// ======================
+// ==========================================
 // LOAD POSTS
-// ======================
+// ==========================================
 
 async function loadPosts() {
 
-    const postsContainer = document.getElementById("postsContainer");
+    const postsContainer =
+        document.getElementById("postsContainer");
 
     try {
 
-        const response = await fetch(`${API_URL}/api/posts`);
+        const response =
+            await fetch(`${API_URL}/api/posts`);
 
-        const posts = await response.json();
+        const posts =
+            await response.json();
 
         if (!response.ok) {
-            throw new Error(posts.message || "Unable to load posts");
+            throw new Error(posts.message);
         }
 
-        if (posts.length === 0) {
+        postsContainer.innerHTML = "";
+
+        if (!posts.length) {
 
             postsContainer.innerHTML = `
                 <p class="loading">
-                    No posts yet. Be the first to post! 🎉
+                    No posts yet.
                 </p>
             `;
 
             return;
         }
 
-        postsContainer.innerHTML = "";
-
         posts.forEach(post => {
 
-            const postCard = document.createElement("div");
+            const isMe =
+                String(post.user?._id) ===
+                String(storedUser._id);
+
+            const userName =
+                isMe
+                    ? "You"
+                    : (post.user?.name || "CampusSphere User");
+
+            const role =
+                post.user?.role || "Student";
+
+            const university =
+                post.user?.university || "";
+
+            const likeCount =
+                post.likes?.length || 0;
+
+            const liked =
+                post.likes?.includes(storedUser._id);
+
+            const postCard =
+                document.createElement("div");
+
             postCard.className = "post-card";
-
-            const userName = post.user?.name || "CampusSphere User";
-            const role = post.user?.role || "Student";
-            const university = post.user?.university || "";
-            const likeCount = post.likes ? post.likes.length : 0;
-            // ======================
-// LIKE POSTS
-// ======================
-
-document.querySelectorAll(".like-btn").forEach(button => {
-
-    button.addEventListener("click", async () => {
-
-        const postId =
-            button.dataset.postId;
-
-        try {
-
-            const response = await fetch(
-                `${API_URL}/api/posts/${postId}/like`,
-                {
-
-                    method: "PUT",
-
-                    headers: {
-                        "Authorization":
-                            `Bearer ${token}`
-                    }
-
-                }
-            );
-
-
-            const data =
-                await response.json();
-
-
-            if (!response.ok) {
-
-                alert(
-                    data.message ||
-                    "Unable to like post"
-                );
-
-                return;
-            }
-
-
-            button.innerHTML =
-                `❤️ ${data.likes}`;
-
-
-        } catch (error) {
-
-            console.error(error);
-
-            alert(
-                "Unable to connect to server."
-            );
-
-        }
-
-    });
-
-});
-// ======================
-// SHARE POSTS
-// ======================
-
-document.querySelectorAll(".share-btn").forEach(button => {
-
-    button.addEventListener("click", async () => {
-
-        const postId =
-            button.dataset.postId;
-
-        const shareUrl =
-            `${window.location.origin}/frontend/index.html#post-${postId}`;
-
-        try {
-
-            await navigator.clipboard.writeText(shareUrl);
-
-            alert("Post link copied.");
-
-        } catch (error) {
-
-            alert("Unable to copy post link.");
-
-        }
-
-    });
-
-});
-
 
             postCard.innerHTML = `
 
                 <div class="post-header">
 
-                    <a href="profile.html?user=${post.user?._id}" class="avatar-link">
+                    <a href="profile.html?user=${post.user._id}" class="avatar-link">
 
                         <div class="avatar">
-                            ${userName.charAt(0).toUpperCase()}
+                            ${isMe ? "Y" : userName.charAt(0).toUpperCase()}
                         </div>
 
                     </a>
@@ -170,11 +98,16 @@ document.querySelectorAll(".share-btn").forEach(button => {
                     <div>
 
                         <div class="post-user">
+
                             ${userName}
+
                         </div>
 
                         <div class="post-meta">
-                            ${role}${university ? " • " + university : ""}
+
+                            ${role}
+                            ${university ? " • " + university : ""}
+
                         </div>
 
                     </div>
@@ -182,33 +115,41 @@ document.querySelectorAll(".share-btn").forEach(button => {
                 </div>
 
                 <div class="post-content">
+
                     ${post.content}
+
                 </div>
 
                 <div class="post-actions">
 
-    <button
-        class="like-btn"
-        data-post-id="${post._id}"
-    >
-        ❤️ ${likeCount}
-    </button>
+                    <button
+                        class="like-btn"
+                        data-post-id="${post._id}"
+                    >
 
-    <button
-        class="comment-btn"
-        data-post-id="${post._id}"
-    >
-        💬 Comment
-    </button>
+                        ${liked ? "❤️" : "🤍"} ${likeCount}
 
-    <button
-        class="share-btn"
-        data-post-id="${post._id}"
-    >
-        ↗ Share
-    </button>
+                    </button>
 
-</div>
+                    <button
+                        class="comment-btn"
+                        data-post-id="${post._id}"
+                    >
+
+                        💬 Comment
+
+                    </button>
+
+                    <button
+                        class="share-btn"
+                        data-post-id="${post._id}"
+                    >
+
+                        ↗ Share
+
+                    </button>
+
+                </div>
 
             `;
 
@@ -216,64 +157,171 @@ document.querySelectorAll(".share-btn").forEach(button => {
 
         });
 
-    } catch (error) {
+        attachLikeEvents();
 
-        console.error(error);
+        attachShareEvents();
+
+    }
+
+    catch (error) {
+
+        console.log(error);
 
         postsContainer.innerHTML = `
             <p class="loading">
                 Unable to load posts.
             </p>
         `;
+
     }
+
+}
+// ==========================================
+// LIKE / UNLIKE POSTS
+// ==========================================
+
+function attachLikeEvents() {
+
+    document.querySelectorAll(".like-btn").forEach(button => {
+
+        button.onclick = async () => {
+
+            const postId = button.dataset.postId;
+
+            try {
+
+                const response = await fetch(
+                    `${API_URL}/api/posts/${postId}/like`,
+                    {
+                        method: "PUT",
+                        headers: {
+                            Authorization: `Bearer ${token}`
+                        }
+                    }
+                );
+
+                const data = await response.json();
+
+                if (!response.ok) {
+
+                    alert(data.message || "Unable to like post");
+
+                    return;
+
+                }
+
+                // Reload feed so like count & heart stay correct
+                loadPosts();
+
+            } catch (error) {
+
+                console.log(error);
+
+                alert("Unable to connect to server.");
+
+            }
+
+        };
+
+    });
+
 }
 
-// ======================
-// CREATE POST
-// ======================
 
-const createPostBtn = document.getElementById("createPostBtn");
+// ==========================================
+// SHARE POSTS
+// ==========================================
+
+function attachShareEvents() {
+
+    document.querySelectorAll(".share-btn").forEach(button => {
+
+        button.onclick = async () => {
+
+            const postId = button.dataset.postId;
+
+            const shareLink =
+                `${window.location.origin}/frontend/profile.html?post=${postId}`;
+
+            try {
+
+                await navigator.clipboard.writeText(shareLink);
+
+                alert("Post link copied!");
+
+            } catch {
+
+                alert("Unable to copy link.");
+
+            }
+
+        };
+
+    });
+
+}
+
+
+// ==========================================
+// CREATE POST
+// ==========================================
+
+const createPostBtn =
+    document.getElementById("createPostBtn");
 
 if (createPostBtn) {
 
     createPostBtn.addEventListener("click", async () => {
 
-        const postContent = document
-            .getElementById("postContent")
-            .value
-            .trim();
+        const postContent =
+            document
+                .getElementById("postContent")
+                .value
+                .trim();
 
         if (!postContent) {
 
             alert("Please write something first.");
 
             return;
+
         }
 
         try {
 
-            const response = await fetch(`${API_URL}/api/posts`, {
+            const response =
+                await fetch(
+                    `${API_URL}/api/posts`,
+                    {
 
-                method: "POST",
+                        method: "POST",
 
-                headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": `Bearer ${token}`
-                },
+                        headers: {
 
-                body: JSON.stringify({
-                    content: postContent
-                })
+                            "Content-Type": "application/json",
 
-            });
+                            Authorization: `Bearer ${token}`
 
-            const data = await response.json();
+                        },
+
+                        body: JSON.stringify({
+
+                            content: postContent
+
+                        })
+
+                    }
+                );
+
+            const data =
+                await response.json();
 
             if (!response.ok) {
 
-                alert(data.message || "Unable to create post");
+                alert(data.message);
 
                 return;
+
             }
 
             document.getElementById("postContent").value = "";
@@ -282,36 +330,41 @@ if (createPostBtn) {
 
         } catch (error) {
 
-            console.error(error);
+            console.log(error);
 
-            alert("Unable to connect to server.");
+            alert("Unable to create post.");
+
         }
 
     });
 
 }
 
-// ======================
-// LOGOUT
-// ======================
 
-const logoutBtn = document.getElementById("logoutBtn");
+// ==========================================
+// LOGOUT
+// ==========================================
+
+const logoutBtn =
+    document.getElementById("logoutBtn");
 
 if (logoutBtn) {
 
-    logoutBtn.addEventListener("click", () => {
+    logoutBtn.onclick = () => {
 
         localStorage.removeItem("token");
+
         localStorage.removeItem("user");
 
         window.location.href = "login.html";
 
-    });
+    };
 
 }
 
-// ======================
+
+// ==========================================
 // START
-// ======================
+// ==========================================
 
 loadPosts();

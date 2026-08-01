@@ -89,9 +89,14 @@ async function loadProfile() {
 
     try {
 
-        const response = await fetch(
-            `${API_BASE}/api/users/${profileUserId}`
-        );
+       const response = await fetch(
+    `${API_BASE}/api/users/${profileUserId}`,
+    {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    }
+);
 
         const user = await response.json();
 
@@ -145,42 +150,32 @@ async function loadProfile() {
         // OWN PROFILE OR OTHER PROFILE?
         // ==========================================
 
-        const isOwnProfile =
-            String(user._id) === String(storedUser._id);
+        const isOwnProfile = user._id === storedUser._id;
 
+if (isOwnProfile) {
 
-        if (isOwnProfile) {
+    // My own profile
+    editProfileBtn.style.display = "inline-flex";
+    followBtn.style.display = "none";
 
-            // Own profile
-            editProfileBtn.style.display = "inline-flex";
+} else {
 
-            followBtn.style.display = "none";
+    // Someone else's profile
+    editProfileBtn.style.display = "none";
+    followBtn.style.display = "inline-flex";
 
-        } else {
-
-            // Someone else's profile
-            editProfileBtn.style.display = "none";
-
-            followBtn.style.display = "inline-flex";
-
-            const myFollowing =
-                user.followers?.some(
-                    id => String(id?._id || id) === String(storedUser._id)
-                );
-
-            followBtn.textContent =
-                myFollowing ? "Following" : "Follow";
-        }
-
-
+   followBtn.textContent =
+    user.isFollowing
+        ? "Following"
+        : "Follow";
+}
         await loadUserPosts();
 
     } catch (error) {
 
         console.error("LOAD PROFILE ERROR:", error);
 
-        profileName.textContent =
-            "Unable to load profile";
+        profileName.textContent = "Unable to load profile";
 
     }
 
@@ -238,17 +233,19 @@ async function loadUserPosts() {
 
         posts.forEach(post => {
 
-            const user = post.user || {};
+           const user = post.user || {};
 
-            const userName =
-                user.name || "CampusSphere User";
+const isMe = String(user._id) === String(storedUser._id);
 
-            const role =
-                user.role || "Student";
+const userName = isMe
+    ? "You"
+    : (user.name || "CampusSphere User");
 
-            const university =
-                user.university || "";
+const role =
+    user.role || "Student";
 
+const university =
+    user.university || "";
 
             const postCard =
                 document.createElement("article");
@@ -268,8 +265,14 @@ async function loadUserPosts() {
                     <div>
 
                         <div class="post-user">
-                            ${escapeHTML(userName)}
-                        </div>
+
+    ${escapeHTML(userName)}
+
+    ${isMe
+        ? `<span class="you-badge">YOU</span>`
+        : ""}
+
+</div>
 
                         <div class="post-meta">
                             ${escapeHTML(role)}
@@ -606,8 +609,12 @@ function showPeople(title, people) {
 
         people.forEach(person => {
 
-            const name =
-                person.name || "CampusSphere User";
+             const isMe =
+    String(person._id) === String(storedUser._id);
+
+const name = isMe
+    ? "You"
+    : (person.name || "CampusSphere User");
 
             const role =
                 person.role || "Student";
@@ -616,8 +623,18 @@ function showPeople(title, people) {
             const item =
                 document.createElement("div");
 
-            item.className =
-                "people-list-item";
+           item.className = "people-list-item";
+
+item.style.cursor = "pointer";
+
+item.onclick = () => {
+
+    peopleModal.classList.remove("active");
+
+    window.location.href =
+        `profile.html?user=${person._id}`;
+
+};
 
 
             item.innerHTML = `
