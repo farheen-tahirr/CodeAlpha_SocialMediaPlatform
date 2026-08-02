@@ -4,6 +4,13 @@
 
 const token = localStorage.getItem("token");
 const storedUser = JSON.parse(localStorage.getItem("user"));
+let currentPostId = null;
+
+const commentModal = document.getElementById("commentModal");
+const commentsList = document.getElementById("commentsList");
+const commentInput = document.getElementById("commentInput");
+const sendCommentBtn = document.getElementById("sendCommentBtn");
+const closeCommentModal = document.getElementById("closeCommentModal");
 
 if (!token || !storedUser) {
     window.location.href = "login.html";
@@ -55,14 +62,14 @@ async function loadPosts() {
 
         posts.forEach(post => {
 
-            const isMe =
-                String(post.user?._id) ===
-                String(storedUser._id);
+           const isMe =
+    String(post.user?._id) === String(storedUser._id);
 
-            const userName =
-                isMe
-                    ? "You"
-                    : (post.user?.name || "CampusSphere User");
+const realName =
+    post.user?.name || "CampusSphere User";
+
+const userName =
+    isMe ? "You" : realName;
 
             const role =
                 post.user?.role || "Student";
@@ -87,9 +94,9 @@ async function loadPosts() {
 
                     <a href="profile.html?user=${post.user._id}" class="avatar-link">
 
-                        <div class="avatar">
-                            ${isMe ? "Y" : userName.charAt(0).toUpperCase()}
-                        </div>
+                       <div class="avatar">
+    ${realName.charAt(0).toUpperCase()}
+</div>
 
                     </a>
 
@@ -129,14 +136,12 @@ async function loadPosts() {
 
                     </button>
 
-                    <button
-                        class="comment-btn"
-                        data-post-id="${post._id}"
-                    >
-
-                        💬 Comment
-
-                    </button>
+                   <button
+    class="comment-btn"
+    data-post-id="${post._id}"
+>
+    💬 ${post.commentCount || 0}
+</button>
 
                     <button
                         class="share-btn"
@@ -158,6 +163,7 @@ async function loadPosts() {
         attachLikeEvents();
 
         attachShareEvents();
+        attachCommentEvents();
 
     }
 
@@ -338,7 +344,147 @@ if (createPostBtn) {
 
 }
 
+function attachCommentEvents() {
 
+    console.log("Comment events attached");
+
+    document.querySelectorAll(".comment-btn").forEach(button => {
+
+        button.onclick = async () => {
+
+            console.log("Comment button clicked");
+
+            currentPostId = button.dataset.postId;
+
+            commentModal.classList.add("active");
+
+            loadComments(currentPostId);
+
+        };
+
+    });
+
+}
+async function loadComments(postId) {
+
+    const response = await fetch(`${API_URL}/api/comments/${postId}`);
+
+    const comments = await response.json();
+
+    commentsList.innerHTML = "";
+
+    if (comments.length === 0) {
+
+        commentsList.innerHTML = "<p>No comments yet.</p>";
+
+        return;
+
+    }
+
+   comments.forEach(comment => {
+
+    const isMe =
+        String(comment.user._id) === String(storedUser._id);
+
+    const realName =
+        comment.user.name || "CampusSphere User";
+
+    const avatarLetter =
+        realName.charAt(0).toUpperCase();
+
+    commentsList.innerHTML += `
+
+        <div class="comment-item">
+
+            <div
+                class="comment-avatar"
+                onclick="window.location.href='profile.html?user=${comment.user._id}'"
+            >
+                ${avatarLetter}
+            </div>
+
+            <div class="comment-body">
+
+                <div class="comment-header">
+
+                    <div
+                        class="comment-name"
+                        onclick="window.location.href='profile.html?user=${comment.user._id}'"
+                    >
+                        ${realName}
+                    </div>
+
+                    ${
+                        isMe
+                            ? `<span class="you-badge">YOU</span>`
+                            : ""
+                    }
+
+                </div>
+
+                <p class="comment-text">
+                    ${comment.content}
+                </p>
+
+            </div>
+
+        </div>
+
+    `;
+
+});
+}
+if (sendCommentBtn) {
+
+    sendCommentBtn.onclick = async () => {
+
+    if (!commentInput.value.trim()) return;
+
+    const response = await fetch(
+
+        `${API_URL}/api/comments/${currentPostId}`,
+
+        {
+
+            method: "POST",
+
+            headers: {
+
+                "Content-Type": "application/json",
+
+                "Authorization": `Bearer ${token}`
+
+            },
+
+            body: JSON.stringify({
+
+                content: commentInput.value
+
+            })
+
+        }
+
+    );
+
+    if (response.ok) {
+
+        commentInput.value = "";
+
+        loadComments(currentPostId);
+
+    }
+
+};
+}
+if (closeCommentModal) {
+
+    closeCommentModal.onclick = () => {
+
+        commentModal.classList.remove("active");
+
+    };
+
+}
 // ==========================================
 // LOGOUT
 // ==========================================

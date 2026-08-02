@@ -1807,3 +1807,172 @@ background:#dbeafe;
     color:#111;
     border:1px solid #ccc;
 }
+/* ======================
+   COMMENT MODAL
+====================== */
+
+.modal{
+
+    display:none;
+
+    position:fixed;
+
+    inset:0;
+
+    background:rgba(0,0,0,.45);
+
+    justify-content:center;
+
+    align-items:center;
+
+    z-index:9999;
+
+}
+
+.modal.active{
+
+    display:flex;
+
+}
+
+.modal-content{
+
+    width:500px;
+
+    max-width:95%;
+
+    background:white;
+
+    border-radius:20px;
+
+    padding:25px;
+
+}
+
+.close{
+
+    float:right;
+
+    cursor:pointer;
+
+    font-size:28px;
+
+    font-weight:bold;
+
+}
+
+#commentsList{
+
+    max-height:300px;
+
+    overflow-y:auto;
+
+    margin:20px 0;
+
+}
+
+.comment{
+
+    padding:12px 0;
+
+    border-bottom:1px solid #eee;
+
+}
+
+.comment strong{
+
+    color:#2563eb;
+
+}
+
+#commentInput{
+
+    width:100%;
+
+    height:80px;
+
+    padding:12px;
+
+    border-radius:12px;
+
+    border:1px solid #ddd;
+
+    resize:none;
+
+}
+
+#sendCommentBtn{
+
+    margin-top:15px;
+
+    background:#2563eb;
+
+    color:white;
+
+    border:none;
+
+    padding:12px 25px;
+
+    border-radius:25px;
+
+    cursor:pointer;
+
+}
+.comment-item{
+    display:flex;
+    align-items:flex-start;
+    gap:12px;
+    margin-bottom:15px;
+}
+
+.comment-avatar{
+    width:42px;
+    height:42px;
+    border-radius:50%;
+    background:#2563eb;
+    color:white;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-weight:700;
+    cursor:pointer;
+    flex-shrink:0;
+}
+
+.comment-body{
+    flex:1;
+}
+
+.comment-header{
+    display:flex;
+    align-items:center;
+    gap:8px;
+}
+
+.comment-name{
+    font-weight:600;
+    color:#111827;
+    cursor:pointer;
+}
+
+.comment-text{
+    margin:4px 0 0;
+    color:#374151;
+}
+
+.you-badge{
+    background:#2563eb;
+    color:white;
+    padding:2px 8px;
+    border-radius:20px;
+    font-size:11px;
+    font-weight:600;
+}
+.you-badge{
+    background:#2563eb;
+    color:white;
+    font-size:10px;
+    padding:2px 8px;
+    border-radius:12px;
+    font-weight:700;
+}

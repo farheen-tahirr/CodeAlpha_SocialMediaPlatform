@@ -237,9 +237,11 @@ async function loadUserPosts() {
 
 const isMe = String(user._id) === String(storedUser._id);
 
-const userName = isMe
-    ? "You"
-    : (user.name || "CampusSphere User");
+const realName =
+    user.name || "CampusSphere User";
+
+const userName =
+    isMe ? "You" : realName;
 
 const role =
     user.role || "Student";
@@ -257,10 +259,9 @@ const university =
             postCard.innerHTML = `
 
                 <div class="post-header">
-
-                    <div class="avatar">
-                        ${userName.charAt(0).toUpperCase()}
-                    </div>
+<div class="avatar">
+    ${realName.charAt(0).toUpperCase()}
+</div>
 
                     <div>
 
