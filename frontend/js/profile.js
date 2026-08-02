@@ -293,19 +293,25 @@ const university =
 
                 <div class="post-actions">
 
-                    <button>
-                        ❤️ ${post.likes?.length || 0}
-                    </button>
+    <button
+        class="like-btn"
+        data-post-id="${post._id}">
+        ❤️ ${post.likes?.length || 0}
+    </button>
 
-                    <button>
-                        💬 Comment
-                    </button>
+    <button
+        class="comment-btn"
+        data-post-id="${post._id}">
+        💬 Comment
+    </button>
 
-                    <button>
-                        ↗ Share
-                    </button>
+    <button
+        class="share-btn"
+        data-post-id="${post._id}">
+        ↗ Share
+    </button>
 
-                </div>
+</div>
 
             `;
 
@@ -313,6 +319,8 @@ const university =
 
         });
 
+        attachProfileLikeEvents();
+attachProfileShareEvents();
     } catch (error) {
 
         console.error("LOAD POSTS ERROR:", error);
@@ -324,6 +332,84 @@ const university =
             </div>
         `;
     }
+
+}
+// ==========================================
+// PROFILE LIKE EVENTS
+// ==========================================
+
+function attachProfileLikeEvents() {
+
+    document.querySelectorAll(".like-btn").forEach(button => {
+
+        button.onclick = async () => {
+
+            const postId = button.dataset.postId;
+
+            try {
+
+                const response = await fetch(
+                    `${API_BASE}/api/posts/${postId}/like`,
+                    {
+                        method: "PUT",
+                        headers: {
+                            Authorization: `Bearer ${token}`
+                        }
+                    }
+                );
+
+                const data = await response.json();
+
+                if (!response.ok) {
+                    return alert(data.message);
+                }
+
+                button.innerHTML = `❤️ ${data.likes}`;
+
+            } catch (error) {
+
+                console.error(error);
+                alert("Unable to like post.");
+
+            }
+
+        };
+
+    });
+
+}
+
+
+// ==========================================
+// PROFILE SHARE EVENTS
+// ==========================================
+
+function attachProfileShareEvents() {
+
+    document.querySelectorAll(".share-btn").forEach(button => {
+
+        button.onclick = async () => {
+
+            const postId = button.dataset.postId;
+
+            const shareUrl =
+                `${window.location.origin}/profile.html?user=${profileUserId}#post-${postId}`;
+
+            try {
+
+                await navigator.clipboard.writeText(shareUrl);
+
+                alert("Post link copied.");
+
+            } catch {
+
+                alert("Unable to copy link.");
+
+            }
+
+        };
+
+    });
 
 }
 
