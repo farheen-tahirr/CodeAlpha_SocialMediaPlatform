@@ -36,20 +36,26 @@ const createComment = async (req, res) => {
 const getComments = async (req, res) => {
     try {
 
+        console.log("========== COMMENTS ==========");
+        console.log("Post ID:", req.params.postId);
+
         const comments = await Comment.find({
-            post: req.params.postId,
+            post: req.params.postId
         })
         .populate("user", "name profileImage role university")
         .sort({ createdAt: 1 });
+
+        console.log("Comments found:", comments.length);
 
         res.status(200).json(comments);
 
     } catch (error) {
 
+        console.log("========== ERROR ==========");
         console.log(error);
 
         res.status(500).json({
-            message: "Server Error",
+            message: "Server Error"
         });
 
     }

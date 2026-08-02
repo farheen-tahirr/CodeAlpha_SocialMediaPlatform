@@ -1,4 +1,5 @@
 const Post = require("../models/Post");
+const Comment = require("../models/Comment");
 
 // ======================
 // Create Post
@@ -37,10 +38,29 @@ const getAllPosts = async (req, res) => {
     try {
 
         const posts = await Post.find()
-            .populate("user", "name university profileImage role")
-            .sort({ createdAt: -1 });
+.populate("user", "name university profileImage role")
+.sort({ createdAt: -1 });
 
-        res.status(200).json(posts);
+const postsWithComments = await Promise.all(
+
+posts.map(async(post)=>{
+
+const commentCount = await Comment.countDocuments({
+post: post._id
+});
+
+return{
+
+...post.toObject(),
+commentCount
+
+};
+
+})
+
+);
+
+res.status(200).json(postsWithComments);
 
     } catch (error) {
 
@@ -66,8 +86,24 @@ const getPostsByUser = async (req, res) => {
         .populate("user", "name role university")
         .sort({ createdAt: -1 });
 
-        res.status(200).json(posts);
+      const postsWithCounts = await Promise.all(
 
+    posts.map(async (post) => {
+
+        const commentCount = await Comment.countDocuments({
+            post: post._id
+        });
+
+        return {
+            ...post.toObject(),
+            commentCount
+        };
+
+    })
+
+);
+
+res.status(200).json(postsWithCounts);
     } catch (error) {
 
         console.log(error);
