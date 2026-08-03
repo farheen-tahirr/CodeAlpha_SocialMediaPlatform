@@ -7,7 +7,7 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>CampusSphere | Home</title>
+   <title>CampusSphere | Network</title>
 
     <link rel="stylesheet" href="css/style.css">
 
@@ -107,9 +107,9 @@
 
 
 
-            <a href="settings.html">
-    ⚙ Settings
-</a>
+            <a href="#">
+                ⚙ Settings
+            </a>
 
 
 
@@ -126,120 +126,48 @@
         ======================= -->
 
 
-        <main class="feed">
+       <main class="feed">
 
+    <section class="welcome-card">
 
+        <h1>
+            👥 Campus Network
+        </h1>
 
+        <p>
+            Discover students, alumni and connect with your campus community.
+        </p>
 
+    </section>
 
-            <!-- Welcome Card -->
+    <section class="create-post">
 
+        <input
+            type="text"
+            id="searchUser"
+            placeholder="🔍 Search students..."
+            class="search-user"
+        >
 
-            <section class="welcome-card">
+    </section>
 
+    <section>
 
-                <h1 id="welcomeMessage">
-                    Welcome to CampusSphere 👋
-                </h1>
+        <h2 class="feed-title">
+            People You May Know
+        </h2>
 
+        <div id="usersContainer">
 
+            <p class="loading">
+                Loading users...
+            </p>
 
-                <p>
-                    Connect • Learn • Grow Together
-                </p>
+        </div>
 
+    </section>
 
-
-            </section>
-
-
-
-
-
-
-
-
-            <!-- Create Post -->
-
-
-            <section class="create-post">
-
-
-
-                <h3>
-                    What's on your mind?
-                </h3>
-
-
-
-                <textarea
-
-                    id="postContent"
-
-                    placeholder="Share something with your campus community..."
-
-                    maxlength="1000">
-
-                </textarea>
-
-
-
-
-                <button id="createPostBtn">
-
-                    Post
-
-                </button>
-
-
-
-            </section>
-
-
-
-
-
-
-
-            <!-- Campus Feed -->
-
-
-            <section>
-
-
-                <h2 class="feed-title">
-
-                    Campus Feed
-
-                </h2>
-
-
-
-
-
-                <div id="postsContainer">
-
-
-                    <p class="loading">
-
-                        Loading posts...
-
-                    </p>
-
-
-
-                </div>
-
-
-
-            </section>
-
-
-
-
-
-        </main>
-
+</main>
 
 
 
@@ -455,41 +383,6 @@
 
     </div>
 
-
-
-
-
-
-
-    
-
-    <!-- ======================
-     COMMENT MODAL
-====================== -->
-
-<div id="commentModal" class="modal">
-
-    <div class="modal-content">
-
-        <span id="closeCommentModal" class="close">&times;</span>
-
-        <h2>Comments</h2>
-
-        <div id="commentsList"></div>
-
-        <textarea
-            id="commentInput"
-            placeholder="Write a comment..."
-        ></textarea>
-
-        <button id="sendCommentBtn">
-            Post Comment
-        </button>
-
-    </div>
-
-</div>
-
 <!-- ======================
          JAVASCRIPT
     ======================= -->
@@ -497,8 +390,7 @@
 
     <script src="js/auth.js"></script>
 
-    <script src="js/feed.js"></script>
-
+   <script src="js/network.js"></script>
 
 </body>
 

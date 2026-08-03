@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>CampusSphere | Settings</title>
+
+    <link rel="stylesheet" href="css/style.css">
+
+</head>
+
+<body>
+
+    <!-- ======================
+         NAVBAR
+    ======================= -->
+
+    <nav class="navbar">
+
+        <div class="logo">
+            🎓 CampusSphere
+        </div>
+
+        <div class="nav-links">
+
+            <a href="index.html">
+                Home
+            </a>
+
+            <a href="profile.html">
+                Profile
+            </a>
+
+            <button id="logoutBtn">
+                Logout
+            </button>
+
+        </div>
+
+    </nav>
+
+    <!-- ======================
+         DASHBOARD
+    ======================= -->
+
+    <div class="dashboard">
+
+        <!-- Sidebar -->
+
+        <aside class="sidebar">
+
+            <h3>Menu</h3>
+
+            <a href="index.html">
+                🏠 Home
+            </a>
+
+            <a href="network.html">
+                🤝 Network
+            </a>
+
+            <a href="profile.html">
+                👤 Profile
+            </a>
+
+            <a href="messages.html">
+                💬 Messages
+            </a>
+
+            <a href="settings.html">
+                ⚙ Settings
+            </a>
+
+        </aside>
+
+        <!-- Main -->
+
+       <main class="feed">
+
+    <section class="welcome-card">
+
+        <h1>
+            ⚙ Settings
+        </h1>
+
+        <p>
+            Manage your account preferences.
+        </p>
+
+    </section>
+
+    <!-- Account -->
+
+    <section class="create-post settings-card">
+
+        <h3>👤 Account</h3>
+
+        <div class="setting-row">
+
+            <span>Email</span>
+
+            <strong id="userEmail">
+                Loading...
+            </strong>
+
+        </div>
+
+        <div class="setting-row">
+
+            <span>Member Since</span>
+
+            <strong id="memberSince">
+                July 2026
+            </strong>
+
+        </div>
+
+    </section>
+
+    <!-- Appearance -->
+
+    <section class="create-post settings-card">
+
+        <h3>🎨 Appearance</h3>
+
+        <div class="setting-row">
+
+            <span>Dark Mode</span>
+
+            <label class="switch">
+
+                <input
+                    type="checkbox"
+                    id="darkModeToggle"
+                >
+
+                <span class="slider"></span>
+
+            </label>
+
+        </div>
+
+    </section>
+
+    <!-- Privacy -->
+
+    <section class="create-post settings-card">
+
+        <h3>🔒 Privacy</h3>
+
+        <div class="setting-row">
+
+            <span>Public Profile</span>
+
+            <label class="switch">
+
+                <input
+                    type="checkbox"
+                    id="publicProfileToggle"
+                >
+
+                <span class="slider"></span>
+
+            </label>
+
+        </div>
+
+    </section>
+
+    <!-- Account Actions -->
+
+    <section class="create-post settings-card">
+
+        <h3>⚠ Account</h3>
+
+        <button
+            id="logoutBtn2"
+            class="settings-btn logout-btn"
+        >
+            Logout
+        </button>
+
+        <button
+            id="deleteAccountBtn"
+            class="settings-btn delete-btn"
+        >
+            Delete Account
+        </button>
+
+    </section>
+
+</main>
+
+        <!-- Right Panel -->
+
+        <aside class="right-panel">
+
+            <div class="panel-card">
+
+                <h3>
+                    💡 Tip
+                </h3>
+
+                <p>
+
+                    Keep your profile updated so other students can connect with you more easily.
+
+                </p>
+
+            </div>
+
+        </aside>
+
+    </div>
+    <script src="js/auth.js"></script>
+    <script src="js/settings.js"></script>
+
+</body>
+
+</html>

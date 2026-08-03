@@ -2066,3 +2066,138 @@ font-size:14px;
     transform:translateY(-1px);
 
 }
+.search-user{
+
+    width:100%;
+    padding:14px 18px;
+
+    border:1px solid #d1d5db;
+    border-radius:12px;
+
+    font-size:15px;
+    outline:none;
+
+    margin-top:10px;
+
+}
+
+.follow-btn{
+
+    padding:10px 22px;
+
+    border:none;
+    border-radius:10px;
+
+    background:#2563eb;
+    color:white;
+
+    cursor:pointer;
+
+    font-weight:600;
+
+    transition:.25s;
+
+}
+
+.follow-btn:hover{
+
+    background:#1d4ed8;
+
+}
+/* SETTINGS */
+
+.settings-card{
+
+    display:flex;
+    flex-direction:column;
+    gap:20px;
+
+}
+
+.setting-row{
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    padding:12px 0;
+
+    border-bottom:1px solid #ececec;
+
+}
+
+.settings-btn{
+
+    width:100%;
+    padding:14px;
+
+    border:none;
+    border-radius:12px;
+
+    cursor:pointer;
+
+    font-size:15px;
+    font-weight:600;
+
+}
+
+.logout-btn{
+
+    background:#2563eb;
+    color:white;
+
+}
+
+.logout-btn:hover{
+
+    background:#1d4ed8;
+
+}
+
+.delete-btn{
+
+    background:#ef4444;
+    color:white;
+
+}
+
+.delete-btn:hover{
+
+    background:#dc2626;
+
+}
+/* DARK MODE */
+
+.dark-mode{
+
+    background:#111827;
+    color:white;
+
+}
+
+.dark-mode .navbar{
+
+    background:#1f2937;
+
+}
+
+.dark-mode .sidebar,
+.dark-mode .right-panel,
+.dark-mode .welcome-card,
+.dark-mode .create-post,
+.dark-mode .post-card,
+.dark-mode .panel-card{
+
+    background:#1f2937;
+    color:white;
+
+}
+
+.dark-mode input,
+.dark-mode textarea{
+
+    background:#374151;
+    color:white;
+    border:1px solid #4b5563;
+
+}

@@ -8,6 +8,8 @@ const {
     followUser,
     getFollowers,
     getFollowing,
+    getAllUsers,
+    deleteAccount
 } = require("../controllers/userController");
 
 const router = express.Router();
@@ -17,19 +19,32 @@ const router = express.Router();
 // Logged-in User
 // ======================
 
-router.get("/profile", protect, (req, res) => {
-
-    res.status(200).json(req.user);
-
-});
-
 
 // ======================
-// Own Profile Update
+// Own Profile
+// ======================
+
+router.get("/profile", protect, (req, res) => {
+    res.status(200).json(req.user);
+});
+
+// ======================
+// Update Profile
 // ======================
 
 router.put("/profile", protect, updateProfile);
+// ======================
+// Delete Own Account
+// ======================
 
+router.delete("/profile", protect, deleteAccount);
+
+
+// ======================
+// Get All Users
+// ======================
+
+router.get("/", getAllUsers);
 
 // ======================
 // Followers
@@ -37,13 +52,11 @@ router.put("/profile", protect, updateProfile);
 
 router.get("/:id/followers", getFollowers);
 
-
 // ======================
 // Following
 // ======================
 
 router.get("/:id/following", getFollowing);
-
 
 // ======================
 // Follow / Unfollow
@@ -51,12 +64,10 @@ router.get("/:id/following", getFollowing);
 
 router.put("/:id/follow", protect, followUser);
 
-
 // ======================
 // Get Any User
 // ======================
 
 router.get("/:id", getUserById);
-
 
 module.exports = router;

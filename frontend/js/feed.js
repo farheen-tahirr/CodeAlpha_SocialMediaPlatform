@@ -62,8 +62,9 @@ async function loadPosts() {
 
         posts.forEach(post => {
 
-           const isMe =
-    String(post.user?._id) === String(storedUser._id);
+          const isMe =
+    post.user &&
+    String(post.user._id) === String(storedUser._id);
 
 const realName =
     post.user?.name || "CampusSphere User";
@@ -92,7 +93,7 @@ const userName =
 
                 <div class="post-header">
 
-                    <a href="profile.html?user=${post.user._id}" class="avatar-link">
+                    <a href="profile.html?user=${post.user?._id || ""}" class="avatar-link">
 
                        <div class="avatar">
     ${realName.charAt(0).toUpperCase()}

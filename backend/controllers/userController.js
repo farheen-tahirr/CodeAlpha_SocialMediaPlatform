@@ -1,5 +1,6 @@
 const User = require("../models/User");
-
+const Post = require("../models/Post");
+const Comment = require("../models/Comment");
 // ======================
 // Get User By ID
 // ======================
@@ -255,12 +256,97 @@ const getFollowing = async (req, res) => {
         });
     }
 };
+// ======================
+// Get All Users
+// ======================
 
+const getAllUsers = async (req, res) => {
 
+    try {
+
+        const users = await User.find()
+            .select("name role university profileImage followers");
+
+        res.status(200).json(users);
+
+    } catch (error) {
+
+        console.log(error);
+
+        res.status(500).json({
+            message: "Server Error"
+        });
+
+    }
+
+};
+// ======================
+// Delete Account
+// ======================
+
+// ======================
+// Delete Account
+// ======================
+
+const deleteAccount = async (req, res) => {
+
+    try {
+
+        const user = await User.findById(req.user._id);
+
+        if (!user) {
+
+            return res.status(404).json({
+                message: "User not found"
+            });
+
+        }
+
+        // Delete all posts created by the user
+        await Post.deleteMany({
+            user: req.user._id
+        });
+
+        // Delete all comments created by the user
+        await Comment.deleteMany({
+            user: req.user._id
+        });
+
+        // Remove this user from other users' followers/following lists
+        await User.updateMany(
+            {},
+            {
+                $pull: {
+                    followers: req.user._id,
+                    following: req.user._id
+                }
+            }
+        );
+
+        // Delete the account
+        await User.findByIdAndDelete(req.user._id);
+
+        res.status(200).json({
+            message: "Account deleted successfully"
+        });
+
+    } catch (error) {
+
+        console.log(error);
+
+        res.status(500).json({
+            message: "Server Error"
+        });
+
+    }
+
+};
 module.exports = {
     getUserById,
     updateProfile,
     followUser,
     getFollowers,
     getFollowing,
+    getAllUsers,
+    deleteAccount
 };
