@@ -125,34 +125,39 @@ const userName =
 
                 </div>
 
-                <div class="post-actions">
+               <div class="post-actions">
 
-                    <button
-                        class="like-btn"
-                        data-post-id="${post._id}"
-                    >
+    <button
+        class="like-btn"
+        data-post-id="${post._id}"
+    >
+        ${liked ? "❤️" : "🤍"} ${likeCount}
+    </button>
 
-                        ${liked ? "❤️" : "🤍"} ${likeCount}
+    <button
+        class="comment-btn"
+        data-post-id="${post._id}"
+    >
+        💬 ${post.commentCount || 0}
+    </button>
 
-                    </button>
+    <button
+        class="share-btn"
+        data-post-id="${post._id}"
+    >
+        ↗ Share
+    </button>
 
-                   <button
-    class="comment-btn"
-    data-post-id="${post._id}"
->
-    💬 ${post.commentCount || 0}
-</button>
+    ${isMe ? `
+    <button
+        class="delete-post-btn"
+        data-post-id="${post._id}"
+    >
+        🗑 Delete
+    </button>
+    ` : ""}
 
-                    <button
-                        class="share-btn"
-                        data-post-id="${post._id}"
-                    >
-
-                        ↗ Share
-
-                    </button>
-
-                </div>
+</div>
 
             `;
 
@@ -160,12 +165,15 @@ const userName =
 
         });
 
-        attachLikeEvents();
+       attachLikeEvents();
 
-        attachShareEvents();
-        attachCommentEvents();
+attachShareEvents();
 
+attachCommentEvents();
+
+attachDeletePostEvents();
     }
+
 
     catch (error) {
 
@@ -256,6 +264,112 @@ function attachShareEvents() {
             } catch {
 
                 alert("Unable to copy link.");
+
+            }
+
+        };
+
+    });
+
+}
+// ==========================================
+// DELETE POSTS
+// ==========================================
+
+function attachDeletePostEvents() {
+
+    document.querySelectorAll(".delete-post-btn").forEach(button => {
+
+        button.onclick = async () => {
+
+            const postId = button.dataset.postId;
+
+            const confirmDelete = confirm(
+                "Are you sure you want to delete this post?"
+            );
+
+            if (!confirmDelete) return;
+
+            try {
+
+                const response = await fetch(
+                    `${API_URL}/api/posts/${postId}`,
+                    {
+                        method: "DELETE",
+                        headers: {
+                            Authorization: `Bearer ${token}`
+                        }
+                    }
+                );
+
+                const data = await response.json();
+
+                if (!response.ok) {
+
+                    alert(data.message);
+
+                    return;
+
+                }
+
+                alert("Post deleted successfully.");
+
+                loadPosts();
+
+            } catch (error) {
+
+                console.log(error);
+
+                alert("Unable to delete post.");
+
+            }
+
+        };
+
+    });
+
+}
+function attachDeleteCommentEvents() {
+
+    document.querySelectorAll(".delete-comment-btn").forEach(button => {
+
+        button.onclick = async () => {
+
+            const commentId = button.dataset.commentId;
+
+            console.log("Comment ID:", commentId);
+
+            try {
+
+                const response = await fetch(
+                    `${API_URL}/api/comments/${commentId}`,
+                    {
+                        method: "DELETE",
+                        headers: {
+                            Authorization: `Bearer ${token}`
+                        }
+                    }
+                );
+
+                console.log("Status:", response.status);
+
+                const data = await response.json();
+
+                console.log(data);
+
+                if (!response.ok) {
+
+                    alert(data.message);
+                    return;
+
+                }
+
+                loadComments(currentPostId);
+                loadPosts();
+
+            } catch (error) {
+
+                console.log(error);
 
             }
 
@@ -422,9 +536,26 @@ async function loadComments(postId) {
 
                 </div>
 
-                <p class="comment-text">
-                    ${comment.content}
-                </p>
+               <div class="comment-footer">
+
+    <p class="comment-text">
+        ${comment.content}
+    </p>
+
+    ${
+        isMe
+        ? `
+        <button
+            class="delete-comment-btn"
+            data-comment-id="${comment._id}"
+        >
+            🗑
+        </button>
+        `
+        : ""
+    }
+
+</div>
 
             </div>
 
@@ -433,6 +564,7 @@ async function loadComments(postId) {
     `;
 
 });
+attachDeleteCommentEvents();
 }
 if (sendCommentBtn) {
 

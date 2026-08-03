@@ -1643,39 +1643,50 @@ font-size:14px;
 
 }
 
+/* =====================
+   POST ACTIONS
+===================== */
+
 .post-actions{
 
-display:flex;
-
-gap:15px;
-
-margin-top:20px;
+    display:flex;
+    align-items:center;
+    gap:12px;
+    margin-top:18px;
+    flex-wrap:nowrap;
 
 }
 
 .post-actions button{
 
-flex:1;
+    display:flex;
+    align-items:center;
+    justify-content:center;
 
-padding:10px;
+    flex:1;
+    height:42px;
 
-border:none;
+    border:1px solid #e5e7eb;
+    border-radius:12px;
 
-border-radius:12px;
+    background:white;
+    color:#374151;
 
-background:#f3f4f6;
+    cursor:pointer;
 
-cursor:pointer;
+    font-size:14px;
+    font-weight:600;
 
-transition:.25s;
+    transition:0.25s;
 
-font-weight:600;
+    white-space:nowrap;
 
 }
 
 .post-actions button:hover{
 
-background:#dbeafe;
+    background:#f3f4f6;
+    transform:translateY(-2px);
 
 }
 /* ==========================
@@ -1975,4 +1986,83 @@ background:#dbeafe;
     padding:2px 8px;
     border-radius:12px;
     font-weight:700;
+}
+/* =====================
+   DELETE BUTTON
+===================== */
+
+.delete-post-btn{
+
+    flex:0.8 !important;
+
+    color:#ef4444;
+    border:1px solid #ef4444;
+    background:white;
+
+}
+.delete-post-btn:hover{
+
+    background:#ef4444 !important;
+    color:white !important;
+
+}
+
+/* =====================
+   COMMENT FOOTER
+===================== */
+
+.comment-footer{
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-top:8px;
+
+}
+
+.comment-text{
+
+    margin:0;
+    color:#374151;
+    line-height:1.5;
+
+}
+
+/* =====================
+   DELETE COMMENT
+===================== */
+
+.delete-comment-btn{
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    min-width:90px;
+    height:34px;
+
+    padding:0 14px;
+
+    border:1px solid #ef4444;
+    border-radius:10px;
+
+    background:white;
+    color:#ef4444;
+
+    cursor:pointer;
+
+    font-size:12px;
+    font-weight:600;
+
+    transition:.25s;
+
+}
+
+.delete-comment-btn:hover{
+
+    background:#ef4444;
+    color:white;
+
+    transform:translateY(-1px);
+
 }

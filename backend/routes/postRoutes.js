@@ -5,6 +5,7 @@ const {
     getAllPosts,
     getPostsByUser,
     likePost,
+    deletePost,
 } = require("../controllers/postController");
 
 const router = express.Router();
@@ -18,5 +19,6 @@ router.get("/", getAllPosts);
 router.get("/user/:userId", getPostsByUser);
 // Like / Unlike Post
 router.put("/:id/like", protect, likePost);
-
+// Delete Post
+router.delete("/:id", protect, deletePost);
 module.exports = router;

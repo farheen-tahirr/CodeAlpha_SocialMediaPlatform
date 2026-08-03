@@ -164,10 +164,59 @@ const likePost = async (req, res) => {
 
     }
 };
+// ======================
+// Delete Post
+// ======================
+const deletePost = async (req, res) => {
+
+    try {
+
+        const post = await Post.findById(req.params.id);
+
+        if (!post) {
+
+            return res.status(404).json({
+                message: "Post not found"
+            });
+
+        }
+
+        // Only owner can delete
+        if (post.user.toString() !== req.user._id.toString()) {
+
+            return res.status(403).json({
+                message: "You can only delete your own posts."
+            });
+
+        }
+
+        // Delete comments of this post
+        await Comment.deleteMany({
+            post: post._id
+        });
+
+        await Post.findByIdAndDelete(req.params.id);
+
+        res.json({
+            message: "Post deleted successfully"
+        });
+
+    } catch (error) {
+
+        console.log(error);
+
+        res.status(500).json({
+            message: "Server Error"
+        });
+
+    }
+
+};
 
 module.exports = {
     createPost,
     getAllPosts,
     getPostsByUser,
     likePost,
+    deletePost,
 };
