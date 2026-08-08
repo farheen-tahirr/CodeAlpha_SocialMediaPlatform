@@ -7,390 +7,247 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-   <title>CampusSphere | Network</title>
+    <title>CampusSphere | Network</title>
 
     <link rel="stylesheet" href="css/style.css">
 
 </head>
 
-
 <body>
-
 
     <!-- ======================
          NAVBAR
     ======================= -->
 
-
     <nav class="navbar">
-
 
         <div class="logo">
             🎓 CampusSphere
         </div>
 
-
-
         <div class="nav-links">
-
 
             <a href="index.html">
                 Home
             </a>
 
-
             <a href="profile.html">
                 Profile
             </a>
-
 
             <button id="logoutBtn">
                 Logout
             </button>
 
-
         </div>
 
-
     </nav>
-
-
-
 
 
     <!-- ======================
          DASHBOARD
     ======================= -->
 
-
     <div class="dashboard">
 
 
-
-
-
         <!-- ======================
-             LEFT SIDEBAR
+             SIDEBAR
         ======================= -->
 
-
         <aside class="sidebar">
-
 
             <h3>
                 Menu
             </h3>
 
-
-
             <a href="index.html">
                 🏠 Home
             </a>
 
-
-
             <a href="network.html">
-    🤝 Network
-</a>
-
-
+                🤝 Network
+            </a>
 
             <a href="profile.html">
                 👤 Profile
             </a>
 
-
-
-            <a href="#">
+            <a href="messages.html">
                 💬 Messages
             </a>
 
-
-
-            <a href="#">
+            <a href="settings.html">
                 ⚙ Settings
             </a>
-
-
 
         </aside>
 
 
-
-
-
-
-
         <!-- ======================
-             MAIN FEED
-        ======================= -->
+             MAIN NETWORK
+        ====================== -->
+
+        <main class="feed">
+
+            <section class="welcome-card">
+
+                <h1>
+                    👥 Campus Network
+                </h1>
+
+                <p>
+                    Discover students, alumni and connect with your campus community.
+                </p>
+
+            </section>
 
 
-       <main class="feed">
+            <!-- Search -->
 
-    <section class="welcome-card">
+            <section class="create-post network-search">
 
-        <h1>
-            👥 Campus Network
-        </h1>
+    <h3>
+        Find People
+    </h3>
 
-        <p>
-            Discover students, alumni and connect with your campus community.
-        </p>
+    <input
+        type="text"
+        id="searchUser"
+        placeholder="Search by name, role or university..."
+    >
 
-    </section>
-
-    <section class="create-post">
-
-        <input
-            type="text"
-            id="searchUser"
-            placeholder="🔍 Search students..."
-            class="search-user"
-        >
-
-    </section>
-
-    <section>
-
-        <h2 class="feed-title">
-            People You May Know
-        </h2>
-
-        <div id="usersContainer">
-
-            <p class="loading">
-                Loading users...
-            </p>
-
-        </div>
-
-    </section>
-
-</main>
+</section>
 
 
+            <!-- Users -->
 
+            <section>
 
+                <h2 class="feed-title">
+                    People You May Know
+                </h2>
 
+                <div id="usersContainer">
 
+                    <p class="loading">
+                        Loading users...
+                    </p>
+
+                </div>
+
+            </section>
+
+        </main>
 
 
         <!-- ======================
              RIGHT PANEL
         ======================= -->
 
-
-       <aside class="right-panel">
-
-
-    <!-- Trending -->
-     
-
-    <div class="panel-card">
+        <aside class="right-panel">
 
 
-        <h3>
-            🔥 Trending
-        </h3>
+            <!-- TRENDING -->
 
+            <div class="panel-card">
 
-        <div class="side-item">
+                <h3>
+                    🔥 Trending
+                </h3>
 
-            <strong>
-                #CampusLife
-            </strong>
+                <div id="trendingContainer">
 
-            <span>
-                2.4K posts
-            </span>
+                    <p class="loading">
+                        Loading trending topics...
+                    </p>
 
-        </div>
-
-
-
-        <div class="side-item">
-
-            <strong>
-                #SoftwareEngineering
-            </strong>
-
-            <span>
-                1.8K posts
-            </span>
-
-        </div>
-
-
-
-        <div class="side-item">
-
-            <strong>
-                #Internships
-            </strong>
-
-            <span>
-                950 posts
-            </span>
-
-        </div>
-
-
-    </div>
-
-
-
-
-
-
-    <!-- Alumni -->
-
-
-    <div class="panel-card">
-
-
-        <h3>
-            🎓 Alumni
-        </h3>
-
-
-
-        <div class="profile-mini">
-
-
-            <div class="mini-avatar">
-                A
-            </div>
-
-
-            <div>
-
-                <strong>
-                    Ali Ahmed
-                </strong>
-
-                <p>
-                    Software Engineer
-                </p>
+                </div>
 
             </div>
 
 
-        </div>
+            <!-- ALUMNI -->
+<div class="panel-card">
+
+    <h3>
+        🎓 Alumni
+    </h3>
+
+    <div id="alumniContainer">
+
+        <p class="loading">
+            Loading alumni...
+        </p>
+
+    </div>
+
+</div>
+
+            <!-- EVENTS -->
+
+            <div class="panel-card">
+
+                <h3>
+                    📅 Events
+                </h3>
 
 
+                <div
+                    class="event-box clickable-event"
+                    onclick="window.location.href='events.html'"
+                >
+
+                    <strong>
+                        Hackathon 2026
+                    </strong>
+
+                    <p>
+                        📍 Online
+                    </p>
+
+                    <small>
+                        Aug 15
+                    </small>
+
+                </div>
 
 
+                <div
+                    class="event-box clickable-event"
+                    onclick="window.location.href='events.html'"
+                >
 
-        <div class="profile-mini">
+                    <strong>
+                        Career Workshop
+                    </strong>
 
+                    <p>
+                        📍 University Hall
+                    </p>
 
-            <div class="mini-avatar">
-                S
+                    <small>
+                        Sep 5
+                    </small>
+
+                </div>
+
             </div>
 
 
-            <div>
-
-                <strong>
-                    Sara Khan
-                </strong>
-
-                <p>
-                    Product Designer
-                </p>
-
-            </div>
-
-
-        </div>
-
-
+        </aside>
 
     </div>
 
 
-
-
-
-
-
-    <!-- Events -->
-
-
-    <div class="panel-card">
-
-
-        <h3>
-            📅 Events
-        </h3>
-
-
-
-
-        <div class="event-box">
-
-
-            <strong>
-                Hackathon 2026
-            </strong>
-
-
-            <p>
-                📍 Online
-            </p>
-
-
-            <small>
-                Aug 15
-            </small>
-
-
-        </div>
-
-
-
-
-
-        <div class="event-box">
-
-
-            <strong>
-                Career Workshop
-            </strong>
-
-
-            <p>
-                📍 University Hall
-            </p>
-
-
-            <small>
-                Sep 5
-            </small>
-
-
-        </div>
-
-
-
-    </div>
-
-
-
-
-</aside>
-
-    </div>
-
-<!-- ======================
+    <!-- ======================
          JAVASCRIPT
     ======================= -->
-<script src="js/theme.js"></script>
 
     <script src="js/auth.js"></script>
 
-   <script src="js/network.js"></script>
+    <script src="js/network.js"></script>
+
 
 </body>
 

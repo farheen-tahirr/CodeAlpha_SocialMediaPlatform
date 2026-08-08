@@ -197,3 +197,206 @@ document.getElementById("logoutBtn").onclick = () => {
 // ======================
 
 loadUsers();
+// ==========================================
+// TRENDING
+// ==========================================
+
+async function loadNetworkTrending() {
+
+    const container =
+        document.getElementById("trendingContainer");
+
+    if (!container) return;
+
+    try {
+
+        const response =
+            await fetch(`${API_URL}/api/posts/trending`);
+
+        const trending =
+            await response.json();
+
+        if (!response.ok) {
+            throw new Error("Unable to load trending");
+        }
+
+        container.innerHTML = "";
+
+        if (!trending.length) {
+
+            container.innerHTML = `
+                <p class="loading">
+                    No trending topics yet.
+                </p>
+            `;
+
+            return;
+        }
+
+        trending.forEach(item => {
+
+            const trend =
+                document.createElement("div");
+
+            trend.className = "side-item";
+
+            trend.innerHTML = `
+                <strong
+                    class="trending-hashtag"
+                    data-hashtag="${item.tag}"
+                    style="cursor:pointer;"
+                >
+                    ${item.tag}
+                </strong>
+
+                <span>
+                    ${item.posts}
+                    ${item.posts === 1 ? "post" : "posts"}
+                </span>
+            `;
+
+            container.appendChild(trend);
+
+        });
+
+        document
+            .querySelectorAll(".trending-hashtag")
+            .forEach(hashtag => {
+
+                hashtag.onclick = () => {
+
+                    const selected =
+                        hashtag.dataset.hashtag.toLowerCase();
+
+                    document
+                        .querySelectorAll("#usersContainer")
+                        .forEach(container => {
+
+                            // Network users are not filtered by hashtags.
+                            // Hashtag filtering is handled on the homepage.
+                        });
+
+                    window.location.href =
+                        `index.html?hashtag=${encodeURIComponent(selected)}`;
+
+                };
+
+            });
+
+    } catch (error) {
+
+        console.log(error);
+
+        container.innerHTML = `
+            <p class="loading">
+                Unable to load trending topics.
+            </p>
+        `;
+
+    }
+
+}
+
+
+// ==========================================
+// ALUMNI
+// ==========================================
+
+async function loadNetworkAlumni() {
+
+    const container =
+        document.getElementById("alumniContainer");
+
+    if (!container) return;
+
+    try {
+
+        const response =
+            await fetch(`${API_URL}/api/users`);
+
+        const users =
+            await response.json();
+
+        if (!response.ok) {
+            throw new Error("Unable to load alumni");
+        }
+
+        const alumni =
+            users.filter(
+                user => user.role === "Alumni"
+            );
+
+        container.innerHTML = "";
+
+        if (!alumni.length) {
+
+            container.innerHTML = `
+                <p class="loading">
+                    No alumni available.
+                </p>
+            `;
+
+            return;
+        }
+
+        alumni.slice(0, 3).forEach(user => {
+
+            const item =
+                document.createElement("div");
+
+            item.className = "profile-mini alumni-item";
+
+            item.style.cursor = "pointer";
+
+            item.onclick = () => {
+
+                window.location.href =
+                    `profile.html?user=${user._id}`;
+
+            };
+
+            item.innerHTML = `
+
+                <div class="mini-avatar">
+                    ${user.name.charAt(0).toUpperCase()}
+                </div>
+
+                <div>
+
+                    <strong>
+                        ${user.name}
+                    </strong>
+
+                    <p>
+                        ${user.university || "Campus Alumni"}
+                    </p>
+
+                </div>
+
+            `;
+
+            container.appendChild(item);
+
+        });
+
+    } catch (error) {
+
+        console.log(error);
+
+        container.innerHTML = `
+            <p class="loading">
+                Unable to load alumni.
+            </p>
+        `;
+
+    }
+
+}
+
+
+// ==========================================
+// START RIGHT PANEL
+// ==========================================
+
+loadNetworkTrending();
+loadNetworkAlumni();
