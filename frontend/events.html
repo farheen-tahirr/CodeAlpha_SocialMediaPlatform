@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+    <title>CampusSphere | Events</title>
+
+    <link rel="stylesheet"
+        href="css/style.css">
+
+</head>
+
+<body>
+
+    <!-- ======================
+         NAVBAR
+    ======================= -->
+
+    <nav class="navbar">
+
+        <div class="logo">
+            🎓 CampusSphere
+        </div>
+
+        <div class="nav-links">
+
+            <a href="index.html">
+                Home
+            </a>
+
+            <a href="profile.html">
+                Profile
+            </a>
+
+            <button id="logoutBtn">
+                Logout
+            </button>
+
+        </div>
+
+    </nav>
+
+
+    <!-- ======================
+         DASHBOARD
+    ======================= -->
+
+    <div class="dashboard">
+
+
+        <!-- ======================
+             SIDEBAR
+        ======================= -->
+
+        <aside class="sidebar">
+
+            <h3>
+                Menu
+            </h3>
+
+            <a href="index.html">
+                🏠 Home
+            </a>
+
+            <a href="network.html">
+                🤝 Network
+            </a>
+
+            <a href="profile.html">
+                👤 Profile
+            </a>
+
+            <a href="messages.html">
+                💬 Messages
+            </a>
+
+            <a href="settings.html">
+                ⚙ Settings
+            </a>
+
+        </aside>
+
+
+        <!-- ======================
+             EVENTS
+        ======================= -->
+
+        <main class="feed">
+
+            <section class="welcome-card">
+
+                <h1>
+                    📅 Campus Events
+                </h1>
+
+                <p>
+                    Discover upcoming events and
+                    opportunities in your campus community.
+                </p>
+
+            </section>
+
+
+            <section>
+
+                <h2 class="feed-title">
+                    Upcoming Events
+                </h2>
+
+
+                <div id="eventsPageContainer">
+
+                    <div class="post-card event-page-card">
+
+                        <h3>
+                            💻 Hackathon 2026
+                        </h3>
+
+                        <p>
+                            📍 Online
+                        </p>
+
+                        <p>
+                            Join students and developers
+                            for an exciting coding challenge.
+                        </p>
+
+                        <strong>
+                            August 15, 2026
+                        </strong>
+
+                    </div>
+
+
+                    <div class="post-card event-page-card">
+
+                        <h3>
+                            🎓 Career Workshop
+                        </h3>
+
+                        <p>
+                            📍 University Hall
+                        </p>
+
+                        <p>
+                            Learn about internships,
+                            careers and professional growth.
+                        </p>
+
+                        <strong>
+                            September 5, 2026
+                        </strong>
+
+                    </div>
+
+
+                    <div class="post-card event-page-card">
+
+                        <h3>
+                            🚀 Tech Meetup
+                        </h3>
+
+                        <p>
+                            📍 Computer Science Department
+                        </p>
+
+                        <p>
+                            Meet developers, students and
+                            technology enthusiasts.
+                        </p>
+
+                        <strong>
+                            September 20, 2026
+                        </strong>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+        </main>
+
+
+        <!-- ======================
+             RIGHT PANEL
+        ======================= -->
+
+        <aside class="right-panel">
+
+            <div class="panel-card">
+
+                <h3>
+                    📅 Events
+                </h3>
+
+                <p>
+                    Stay updated with upcoming
+                    campus activities.
+                </p>
+
+            </div>
+
+        </aside>
+
+    </div>
+
+
+    <script src="js/auth.js"></script>
+
+    <script>
+
+        const logoutBtn =
+            document.getElementById("logoutBtn");
+
+        if (logoutBtn) {
+
+            logoutBtn.onclick = () => {
+
+                localStorage.removeItem("token");
+
+                localStorage.removeItem("user");
+
+                window.location.href =
+                    "login.html";
+
+            };
+
+        }
+
+    </script>
+
+</body>
+
+</html>

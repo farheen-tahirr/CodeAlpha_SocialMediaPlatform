@@ -638,6 +638,128 @@ if (logoutBtn) {
     };
 
 }
+// ==========================================
+// TRENDING HASHTAGS
+// ==========================================
+
+async function loadTrending() {
+
+    const trendingContainer =
+        document.getElementById("trendingContainer");
+
+    if (!trendingContainer) return;
+
+    try {
+
+        const response = await fetch(
+            `${API_URL}/api/posts/trending`
+        );
+
+        const trending = await response.json();
+
+        if (!response.ok) {
+
+            throw new Error(
+                trending.message ||
+                "Unable to load trending topics"
+            );
+
+        }
+
+        trendingContainer.innerHTML = "";
+
+        if (!trending.length) {
+
+            trendingContainer.innerHTML = `
+                <p class="loading">
+                    No trending topics yet.
+                </p>
+            `;
+
+            return;
+        }
+
+        trending.forEach(item => {
+
+            const trend =
+                document.createElement("div");
+
+            trend.className = "side-item";
+
+            trend.innerHTML = `
+                <strong
+                    class="trending-hashtag"
+                    data-hashtag="${item.tag}"
+                >
+                    ${item.tag}
+                </strong>
+
+                <span>
+                    ${item.posts}
+                    ${item.posts === 1 ? "post" : "posts"}
+                </span>
+            `;
+
+            trendingContainer.appendChild(trend);
+
+        });
+
+        attachTrendingEvents();
+
+    } catch (error) {
+
+        console.log("Trending error:", error);
+
+        trendingContainer.innerHTML = `
+            <p class="loading">
+                Unable to load trending topics.
+            </p>
+        `;
+
+    }
+
+}
+
+
+// ==========================================
+// CLICKABLE TRENDING HASHTAGS
+// ==========================================
+
+function attachTrendingEvents() {
+
+    document
+        .querySelectorAll(".trending-hashtag")
+        .forEach(hashtag => {
+
+            hashtag.onclick = () => {
+
+                const selectedHashtag =
+                    hashtag.dataset.hashtag.toLowerCase();
+
+                document
+                    .querySelectorAll(
+                        "#postsContainer .post-card"
+                    )
+                    .forEach(post => {
+
+                        const content =
+                            post
+                                .querySelector(".post-content")
+                                ?.textContent
+                                .toLowerCase() || "";
+
+                        post.style.display =
+                            content.includes(selectedHashtag)
+                                ? ""
+                                : "none";
+
+                    });
+
+            };
+
+        });
+
+}
 
 
 // ==========================================
@@ -645,3 +767,111 @@ if (logoutBtn) {
 // ==========================================
 
 loadPosts();
+loadTrending();
+// ==========================================
+// LOAD ALUMNI
+// ==========================================
+
+async function loadAlumni() {
+
+    const alumniContainer =
+        document.getElementById("alumniContainer");
+
+    if (!alumniContainer) return;
+
+    try {
+
+        const response =
+            await fetch(`${API_URL}/api/users`);
+
+        const users =
+            await response.json();
+
+        if (!response.ok) {
+
+            throw new Error(
+                users.message ||
+                "Unable to load alumni"
+            );
+
+        }
+
+        const alumni =
+            users.filter(
+                user =>
+                    user.role &&
+                    user.role.toLowerCase() === "alumni"
+            );
+
+        alumniContainer.innerHTML = "";
+
+        if (!alumni.length) {
+
+            alumniContainer.innerHTML = `
+                <p class="loading">
+                    No alumni available yet.
+                </p>
+            `;
+
+            return;
+        }
+
+        alumni.slice(0, 3).forEach(user => {
+
+            const item =
+                document.createElement("div");
+
+            item.className = "profile-mini alumni-item";
+
+            item.innerHTML = `
+
+                <div class="mini-avatar">
+
+                    ${
+                        user.name
+                            .charAt(0)
+                            .toUpperCase()
+                    }
+
+                </div>
+
+                <div>
+
+                    <strong>
+                        ${user.name}
+                    </strong>
+
+                    <p>
+                        ${user.university || "CampusSphere Alumni"}
+                    </p>
+
+                </div>
+
+            `;
+
+            item.onclick = () => {
+
+                window.location.href =
+                    `profile.html?user=${user._id}`;
+
+            };
+
+            alumniContainer.appendChild(item);
+
+        });
+
+    } catch (error) {
+
+        console.log("Alumni error:", error);
+
+        alumniContainer.innerHTML = `
+            <p class="loading">
+                Unable to load alumni.
+            </p>
+        `;
+
+    }
+
+}
+
+loadAlumni();

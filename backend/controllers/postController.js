@@ -212,6 +212,59 @@ const deletePost = async (req, res) => {
     }
 
 };
+// ======================
+// Get Trending Hashtags
+// ======================
+
+const getTrending = async (req, res) => {
+
+    try {
+
+        const posts = await Post.find()
+            .select("content");
+
+        const hashtagCounts = {};
+
+        posts.forEach(post => {
+
+            if (!post.content) return;
+
+            const hashtags =
+                post.content.match(/#[a-zA-Z0-9_]+/g) || [];
+
+            hashtags.forEach(tag => {
+
+                const normalizedTag =
+                    tag.toLowerCase();
+
+                hashtagCounts[normalizedTag] =
+                    (hashtagCounts[normalizedTag] || 0) + 1;
+
+            });
+
+        });
+
+        const trending = Object.entries(hashtagCounts)
+            .sort((a, b) => b[1] - a[1])
+            .slice(0, 5)
+            .map(([tag, count]) => ({
+                tag,
+                posts: count
+            }));
+
+        res.status(200).json(trending);
+
+    } catch (error) {
+
+        console.log(error);
+
+        res.status(500).json({
+            message: "Server Error"
+        });
+
+    }
+
+};
 
 module.exports = {
     createPost,
@@ -219,4 +272,5 @@ module.exports = {
     getPostsByUser,
     likePost,
     deletePost,
+    getTrending,
 };

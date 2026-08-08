@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>CampusSphere | Messages</title>
+
+    <link
+        rel="stylesheet"
+        href="css/style.css"
+    >
+
+</head>
+
+<body>
+
+    <!-- ======================
+         NAVBAR
+    ======================= -->
+
+    <nav class="navbar">
+
+        <div class="logo">
+            🎓 CampusSphere
+        </div>
+
+        <div class="nav-links">
+
+            <a href="index.html">
+                Home
+            </a>
+
+            <a href="profile.html">
+                Profile
+            </a>
+
+            <button id="logoutBtn">
+                Logout
+            </button>
+
+        </div>
+
+    </nav>
+
+
+    <!-- ======================
+         DASHBOARD
+    ======================= -->
+
+    <div class="dashboard">
+
+
+        <!-- ======================
+             SIDEBAR
+        ======================= -->
+
+        <aside class="sidebar">
+
+            <h3>
+                Menu
+            </h3>
+
+            <a href="index.html">
+                🏠 Home
+            </a>
+
+            <a href="network.html">
+                🤝 Network
+            </a>
+
+            <a href="profile.html">
+                👤 Profile
+            </a>
+
+            <a href="messages.html">
+                💬 Messages
+            </a>
+
+            <a href="settings.html">
+                ⚙ Settings
+            </a>
+
+        </aside>
+
+
+        <!-- ======================
+             MESSAGES
+        ======================= -->
+
+        <main class="feed">
+
+            <section class="welcome-card">
+
+                <h1>
+                    💬 Messages
+                </h1>
+
+                <p>
+                    Connect and communicate with your campus community.
+                </p>
+
+            </section>
+
+
+            <section class="messages-container">
+
+
+                <!-- ======================
+                     USERS
+                ====================== -->
+
+                <div class="messages-users">
+
+                    <h3>
+                        Conversations
+                    </h3>
+
+                    <input
+                        type="text"
+                        id="messageUserSearch"
+                        class="search-user"
+                        placeholder="🔍 Search people..."
+                    >
+
+                    <div id="messageUsersList">
+
+                        <p class="loading">
+                            Loading users...
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ======================
+                     CHAT
+                ====================== -->
+
+                <div class="chat-container">
+
+                    <div
+                        id="chatHeader"
+                        class="chat-header"
+                    >
+
+                        <strong>
+                            Select a person
+                        </strong>
+
+                    </div>
+
+
+                    <div
+                        id="messagesList"
+                        class="messages-list"
+                    >
+
+                        <p class="loading">
+                            Select someone to start chatting.
+                        </p>
+
+                    </div>
+
+
+                    <div class="message-input-area">
+
+                        <textarea
+                            id="messageInput"
+                            placeholder="Write a message..."
+                            disabled
+                        ></textarea>
+
+                        <button
+                            id="sendMessageBtn"
+                            disabled
+                        >
+                            Send
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+        </main>
+
+
+        <!-- ======================
+             RIGHT PANEL
+        ======================= -->
+
+        <aside class="right-panel">
+
+            <div class="panel-card">
+
+                <h3>
+                    💡 Messaging
+                </h3>
+
+                <p>
+                    Select a student or alumni to start a conversation.
+                </p>
+
+            </div>
+
+        </aside>
+
+    </div>
+
+
+    <!-- ======================
+         JAVASCRIPT
+    ======================= -->
+
+    <script src="js/auth.js"></script>
+
+    <script src="js/messages.js"></script>
+
+</body>
+
+</html>
